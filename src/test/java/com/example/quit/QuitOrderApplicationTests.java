@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest
-class QuitOrdersApplicationTests {
+class QuitOrderApplicationTests {
 
     @Autowired
     private EmployMapper em;

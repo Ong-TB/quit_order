@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.quit.common.BaseContext;
 import com.example.quit.common.CustomException;
 import com.example.quit.entity.*;
-import com.example.quit.mapper.OrderMapper;
+import com.example.quit.mapper.OrdersMapper;
 import com.example.quit.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 @Service
-public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements OrderService {
+public class OrdersServiceImpl extends ServiceImpl<OrdersMapper, Orders> implements OrdersService {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
@@ -32,7 +32,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
     private OrderDetailService orderDetailService;
 
     @Override
-    public void submit(Order order) {
+    public void submit(Orders orders) {
         //获取当前用户id
         Long userId = BaseContext.getCurrentId();
         //条件构造器
@@ -45,7 +45,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
             throw new CustomException("购物车数据为空，不能下单");
         }
         //判断一下地址是否有误
-        Long addressBookId = order.getAddressBookId();
+        Long addressBookId = orders.getAddressBookId();
         AddressBook addressBook = addressBookService.getById(addressBookId);
         if (addressBookId == null) {
             throw new CustomException("地址信息有误，不能下单");
@@ -71,27 +71,26 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order> implements
         }).collect(Collectors.toList());
 
         //向订单表设置属性
-        order.setId(orderId);
-        order.setNumber(String.valueOf(orderId));
-        order.setStatus(2);
-        order.setUserId(userId);
-        order.setAddressBookId(addressBookId);
-        order.setOrderTime(LocalDateTime.now());
-        order.setCheckoutTime(LocalDateTime.now());
-        order.setAmount(new BigDecimal(amount.get()));
-        order.setPhone(addressBook.getPhone());
-        order.setUserName(user.getName());
-        order.setConsignee(addressBook.getConsignee());
-        order.setAddress(
+        orders.setId(orderId);
+        orders.setNumber(String.valueOf(orderId));
+        orders.setStatus(2);
+        orders.setUserId(userId);
+        orders.setAddressBookId(addressBookId);
+        orders.setOrderTime(LocalDateTime.now());
+        orders.setCheckoutTime(LocalDateTime.now());
+        orders.setAmount(new BigDecimal(amount.get()));
+        orders.setPhone(addressBook.getPhone());
+        orders.setUserName(user.getName());
+        orders.setConsignee(addressBook.getConsignee());
+        orders.setAddress(
                 (addressBook.getProvinceName() == null ? "":addressBook.getProvinceName())+
                         (addressBook.getCityName() == null ? "":addressBook.getCityName())+
                         (addressBook.getDistrictName() == null ? "":addressBook.getDistrictName())+
                         (addressBook.getDetail() == null ? "":addressBook.getDetail())
         );
-        order.setPayMethod(1);
 
         //根据查询到的购物车数据，对订单表插入数据（1条）
-        super.save(order);
+        super.save(orders);
         //根据查询到的购物车数据，对订单明细表插入数据（多条）
         orderDetailService.saveBatch(orderDetailList);
         //清空购物车数据

@@ -1,9 +1,9 @@
 package com.example.quit.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.quit.entity.Dish;
 import com.example.quit.entity.Setmeal;
+import com.example.quit.entity.SetmealDish;
 
-public interface SetmealService extends IService<Setmeal> {
+public interface SetmealDishService extends IService<SetmealDish> {
 
 }

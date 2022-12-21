@@ -1,2 +1,11 @@
-package com.example.quit.entity;public class SetmealDto {
+package com.example.quit.entity;
+
+import lombok.Data;
+
+import java.util.List;
+
+@Data
+public class SetmealDto extends Setmeal {
+    private List<SetmealDish> setmealDishes;
+    private String categoryName;
 }

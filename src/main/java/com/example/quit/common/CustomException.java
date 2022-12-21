@@ -1,2 +1,7 @@
-package com.example.quit.common;public class CustomException {
+package com.example.quit.common;
+
+public class CustomException extends RuntimeException {
+    public CustomException(String message) {
+        super(message);
+    }
 }

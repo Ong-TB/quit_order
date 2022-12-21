@@ -1,2 +1,9 @@
-package com.example.quit.mapper;public interface CategoryMapper {
+package com.example.quit.mapper;
+
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.quit.entity.Category;
+import org.apache.ibatis.annotations.Mapper;
+
+@Mapper
+public interface CategoryMapper extends BaseMapper<Category> {
 }

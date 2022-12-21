@@ -1,9 +1,8 @@
 package com.example.quit.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.example.quit.entity.AddressBook;
-import com.example.quit.entity.Order;
+import com.example.quit.entity.Orders;
 
-public interface OrderService extends IService<Order> {
-    void submit(Order order);
+public interface OrdersService extends IService<Orders> {
+    void submit(Orders orders);
 }

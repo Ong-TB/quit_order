@@ -124,6 +124,7 @@
               </el-image>
               <div class="divDesc">
                 <div class="name">{{item.name}}</div>
+                <div class="dishFlavor">{{item.dishFlavor}}</div>
                 <div class="price">
                   <span class="spanMoney">￥</span>{{item.amount}}</div>
               </div>
@@ -568,7 +569,7 @@
             toAddOrderPage(){
               if(this.cartData.length > 0){
                 window.requestAnimationFrame(()=>{
-                  window.location.href ='/front/page/add-order.html'
+                  window.location.href ='page/add-order.html'
                 })
               }
             },
